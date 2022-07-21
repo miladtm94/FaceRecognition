@@ -88,6 +88,10 @@ print(keras.__version__)
 %autoreload 2
 ```
 
+    2.3.0
+    2.4.0
+
+
 <a name='2'></a>
 ## 2 - Naive Face Verification
 
@@ -138,6 +142,10 @@ Now summarize the input and output shapes:
 print(model.inputs)
 print(model.outputs)
 ```
+
+    [<tf.Tensor 'input_1:0' shape=(None, 160, 160, 3) dtype=float32>]
+    [<tf.Tensor 'Bottleneck_BatchNorm/batchnorm/add_1:0' shape=(None, 128) dtype=float32>]
+
 
 By using a 128-neuron fully connected layer as its last layer, the model ensures that the output is an encoding vector of size 128. You then use the encodings to compare two face images as follows:
 
@@ -296,6 +304,9 @@ assert loss == 5, "Wrong value. Check your implementation"
 # END UNIT TEST
 ```
 
+    loss = tf.Tensor(527.2598, shape=(), dtype=float32)
+
+
 **Expected Output**:
 
 <table>
@@ -382,9 +393,23 @@ np.around(np.array(kian) / 255.0, decimals=12).shape
 ```
 
 
+
+
+    (160, 160, 3)
+
+
+
+
 ```python
 kian
 ```
+
+
+
+
+![png](output_23_0.png)
+
+
 
 
 ```python
@@ -392,9 +417,23 @@ np.around(np.array(danielle) / 255.0, decimals=12).shape
 ```
 
 
+
+
+    (160, 160, 3)
+
+
+
+
 ```python
 danielle
 ```
+
+
+
+
+![png](output_25_0.png)
+
+
 
 Now, when someone shows up at your front door and swipes their ID card (thus giving you their name), you can look up their encoding in the database, and use it to check if the person standing at the front door matches the name on the ID.
 
@@ -462,6 +501,16 @@ verify("images/camera_0.jpg", "younes", database, FRmodel)
 # END UNIT TEST
 ```
 
+    It's younes, welcome in!
+
+
+
+
+
+    (0.5992949, True)
+
+
+
 **Expected Output**:
 
 <table>
@@ -485,6 +534,16 @@ Run the verification algorithm to check if Benoit can enter.
 ```python
 verify("images/camera_2.jpg", "kian", database, FRmodel)
 ```
+
+    It's not kian, please go away
+
+
+
+
+
+    (1.0259346, False)
+
+
 
 **Expected Output**:
 
@@ -574,7 +633,7 @@ Younes is at the front door and the camera takes a picture of him ("images/camer
 ```python
 # BEGIN UNIT TEST
 # Test 1 with Younes pictures 
-who_is_it("images/camera_1.jpg", database, FRmodel)
+who_is_it("images/camera_0.jpg", database, FRmodel)
 
 # Test 2 with Younes pictures 
 test1 = who_is_it("images/camera_0.jpg", database, FRmodel)
@@ -587,6 +646,11 @@ assert np.isclose(test2[0], 0.0)
 assert test2[1] == 'younes'
 # END UNIT TEST
 ```
+
+    it's younes, the distance is 0.5992949
+    it's younes, the distance is 0.5992949
+    it's younes, the distance is 0.0
+
 
 **Expected Output**:
 
